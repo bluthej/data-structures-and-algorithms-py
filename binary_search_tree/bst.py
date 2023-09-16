@@ -112,5 +112,13 @@ class BinarySearchTree:
                 return None
             return self._recursive_search(value, node.left_child)
 
-    def _iterative_search(self, value: int):
-        raise NotImplementedError
+    def _iterative_search(self, value: int) -> TreeNode | None:
+        node = self.root
+        while node is not None:
+            if value == node.value:
+                return node
+            elif value > node.value:
+                node = node.right_child
+            else:
+                node = node.left_child
+        return None

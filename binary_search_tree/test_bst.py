@@ -19,13 +19,13 @@ def test_insert_new_value(impl):
 @pytest.mark.parametrize("impl", list(Implementation))
 def test_search_existing_value(impl):
     bst = BinarySearchTree(TreeNode(10, TreeNode(5), TreeNode(15)))
-    assert bst.search(5).value == 5
+    assert bst.search(5, impl).value == 5
 
 
 @pytest.mark.parametrize("impl", list(Implementation))
 def test_search_absent_value(impl):
     bst = BinarySearchTree(TreeNode(10, TreeNode(5), TreeNode(15)))
-    assert not bst.search(3)
+    assert not bst.search(3, impl)
 
 
 def test_delete_childless_node():
