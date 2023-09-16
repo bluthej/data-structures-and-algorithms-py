@@ -1,5 +1,11 @@
 from __future__ import annotations
 from dataclasses import dataclass
+from enum import Enum
+
+
+class Implementation(Enum):
+    RECURSIVE = 1
+    ITERATIVE = 2
 
 
 @dataclass
@@ -17,19 +23,38 @@ class BinarySearchTree:
 
     root: TreeNode
 
-    def recursive_insert(self, value: int, ancestor: TreeNode | None = None):
+    def insert(self, value: int, impl: Implementation = Implementation.RECURSIVE):
+        if impl == Implementation.RECURSIVE:
+            self._recursive_insert(value)
+        elif impl == Implementation.ITERATIVE:
+            self._iterative_insert(value)
+        else:
+            raise Exception
+
+    def search(self, value: int, impl: Implementation = Implementation.RECURSIVE):
+        if impl == Implementation.RECURSIVE:
+            return self._recursive_search(value)
+        elif impl == Implementation.ITERATIVE:
+            return self._iterative_search(value)
+        else:
+            raise Exception
+
+    def _recursive_insert(self, value: int, ancestor: TreeNode | None = None):
         if ancestor is None:
             ancestor = self.root
         if value > ancestor.value:
             if ancestor.right_child is None:
                 ancestor.right_child = TreeNode(value)
             else:
-                self.recursive_insert(value, ancestor.right_child)
+                self._recursive_insert(value, ancestor.right_child)
         else:
             if ancestor.left_child is None:
                 ancestor.left_child = TreeNode(value)
             else:
-                self.recursive_insert(value, ancestor.left_child)
+                self._recursive_insert(value, ancestor.left_child)
+
+    def _iterative_insert(self, value: int):
+        raise NotImplementedError
 
     def delete(self, value: int):
         current_node = self.root
@@ -71,7 +96,7 @@ class BinarySearchTree:
         else:
             parent_of_successor.left_child = successor.right_child
 
-    def recursive_search(
+    def _recursive_search(
         self, value: int, node: TreeNode | None = None
     ) -> TreeNode | None:
         if node is None:
@@ -81,8 +106,11 @@ class BinarySearchTree:
         elif value > node.value:
             if node.right_child is None:
                 return None
-            return self.recursive_search(value, node.right_child)
+            return self._recursive_search(value, node.right_child)
         else:
             if node.left_child is None:
                 return None
-            return self.recursive_search(value, node.left_child)
+            return self._recursive_search(value, node.left_child)
+
+    def _iterative_search(self, value: int):
+        raise NotImplementedError

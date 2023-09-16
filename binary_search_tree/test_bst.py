@@ -1,4 +1,5 @@
-from .bst import TreeNode, BinarySearchTree
+from .bst import TreeNode, BinarySearchTree, Implementation
+import pytest
 
 
 def test_create_tree():
@@ -7,21 +8,24 @@ def test_create_tree():
     assert bst.root.left_child.value == 5
 
 
-def test_insert_new_value():
+@pytest.mark.parametrize("impl", list(Implementation))
+def test_insert_new_value(impl):
     bst = BinarySearchTree(TreeNode(10, TreeNode(5), TreeNode(15)))
-    bst.recursive_insert(2)
+    bst.insert(2)
     expected = BinarySearchTree(TreeNode(10, TreeNode(5, TreeNode(2)), TreeNode(15)))
     assert bst == expected
 
 
-def test_search_existing_value():
+@pytest.mark.parametrize("impl", list(Implementation))
+def test_search_existing_value(impl):
     bst = BinarySearchTree(TreeNode(10, TreeNode(5), TreeNode(15)))
-    assert bst.recursive_search(5).value == 5
+    assert bst.search(5).value == 5
 
 
-def test_search_absent_value():
+@pytest.mark.parametrize("impl", list(Implementation))
+def test_search_absent_value(impl):
     bst = BinarySearchTree(TreeNode(10, TreeNode(5), TreeNode(15)))
-    assert not bst.recursive_search(3)
+    assert not bst.search(3)
 
 
 def test_delete_childless_node():
