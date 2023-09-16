@@ -11,7 +11,7 @@ def test_create_tree():
 @pytest.mark.parametrize("impl", list(Implementation))
 def test_insert_new_value(impl):
     bst = BinarySearchTree(TreeNode(10, TreeNode(5), TreeNode(15)))
-    bst.insert(2)
+    bst.insert(2, impl)
     expected = BinarySearchTree(TreeNode(10, TreeNode(5, TreeNode(2)), TreeNode(15)))
     assert bst == expected
 
@@ -51,7 +51,7 @@ def test_delete_node_with_right_child():
     assert bst == expected
 
 
-def test_successor_node_is_right_child():
+def test_delete_with_right_child_successor_node():
     bst = BinarySearchTree(
         TreeNode(10, TreeNode(5), TreeNode(15, TreeNode(12), TreeNode(20)))
     )
@@ -60,7 +60,7 @@ def test_successor_node_is_right_child():
     assert bst == expected
 
 
-def test_successor_node_is_left_child():
+def test_delete_with_left_child_successor_node():
     bst = BinarySearchTree(
         TreeNode(
             10, TreeNode(5), TreeNode(15, TreeNode(12), TreeNode(20, TreeNode(18)))
@@ -73,7 +73,7 @@ def test_successor_node_is_left_child():
     assert bst == expected
 
 
-def test_successor_node_has_right_child():
+def test_delete_with_successor_node_with_right_child():
     bst = BinarySearchTree(
         TreeNode(
             10,

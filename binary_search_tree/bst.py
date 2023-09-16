@@ -54,7 +54,15 @@ class BinarySearchTree:
                 self._recursive_insert(value, ancestor.left_child)
 
     def _iterative_insert(self, value: int):
-        raise NotImplementedError
+        parent = self.root
+        node = parent.right_child if value > parent.value else parent.left_child
+        while node is not None:
+            parent = node
+            node = parent.right_child if value > parent.value else parent.left_child
+        if value > parent.value:
+            parent.right_child = TreeNode(value)
+        else:
+            parent.left_child = TreeNode(value)
 
     def delete(self, value: int):
         current_node = self.root
